@@ -1,9 +1,8 @@
 const path = require("path")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const WebpackMd5Hash = require("webpack-md5-hash")
+const WebpackChunkHash = require("webpack-chunk-hash")
 const CleanWebpackPlugin = require("clean-webpack-plugin")
-const WebpackNotifierPlugin = require("webpack-notifier")
 // const nodeExternals = require("webpack-node-externals") // for target: "node"
 
 module.exports = {
@@ -15,19 +14,47 @@ module.exports = {
         port: process.env.PORT || 8080, // Defaults to 8080
         // If you use Docker, Vagrant or Cloud9, set
         // host: options.host || "0.0.0.0"; // 0.0.0.0 is available to all network devices
-        open: true, // Open the page in browser
+        // open: true, // Open the page in browser
         overlay: true,
-        stats: "errors-only" // Display only errors to reduce the amount of output.
+        stats: "errors-only", // Display only errors to reduce the amount of output.
+        contentBase: path.resolve(__dirname, "src"),
+        inline: true,
+        watchContentBase: true
         // historyApiFallback: // for HTML5 History API based routing
     },
     entry: { main: "./src/index.js" },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "index.[chunkhash].js"
-        // filename: "[name].[chunkhash].js"
+        filename: "assets/js/[name].[chunkhash].js"
     },
     module: {
         rules: [
+            {
+                test: /\.(png|jpe?g|svg|webp)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            // name: "[path][name].[ext]"
+                            name: "[name].[ext]",
+                            outputPath: "assets/images"
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf)?$/,
+                loader: "file-loader",
+                options: {
+                    name: "[name].[ext]",
+                    outputPath: "assets/fonts"
+                }
+            },
+            {
+                test: /favicon\.ico$/,
+                loader: "file-loader",
+                options: { name: "[name].[ext]" }
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -42,7 +69,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new WebpackNotifierPlugin(),
         new CleanWebpackPlugin("dist", {}),
         new MiniCssExtractPlugin({
             filename: "style.[contenthash].css"
@@ -50,9 +76,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: false,
             hash: true,
-            template: "./src/index.html",
-            filename: "index.html"
+            filename: path.resolve(__dirname, 'dist/index.html'),
+            template: path.resolve(__dirname, 'src/index.html'),
         }),
-        new WebpackMd5Hash()
+        new WebpackChunkHash()
     ]
 }
