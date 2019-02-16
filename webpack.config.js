@@ -1,8 +1,8 @@
 const path = require("path")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const WebpackChunkHash = require("webpack-chunk-hash")
 const CleanWebpackPlugin = require("clean-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const WebpackChunkHash = require("webpack-chunk-hash")
 // const nodeExternals = require("webpack-node-externals") // for target: "node"
 
 module.exports = {
@@ -15,29 +15,29 @@ module.exports = {
         // If you use Docker, Vagrant or Cloud9, set
         // host: options.host || "0.0.0.0"; // 0.0.0.0 is available to all network devices
         // open: true, // Open the page in browser
-        overlay: true,
+        overlay: true, // shows a full-screen overlay in the browser when there are compiler errors or warnings
         stats: "errors-only", // Display only errors to reduce the amount of output.
         contentBase: path.resolve(__dirname, "src"),
-        inline: true,
-        watchContentBase: true
+        inline: true, // script will be inserted in your bundle to take care of live reloading
+        watchContentBase: true,
         // historyApiFallback: // for HTML5 History API based routing
     },
     entry: { main: "./src/index.js" },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist/"),
         filename: "assets/js/[name].[chunkhash].js"
     },
     module: {
         rules: [
             {
-                test: /\.(png|jpe?g|svg|webp)(\?v=\d+\.\d+\.\d+)?$/,
+                test: /\.(png|jpg|jpeg|svg|webp)(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            // name: "[path][name].[ext]"
-                            name: "[name].[ext]",
-                            outputPath: "assets/images"
+                            name: "[name].[ext]?[hash:8]",
+                            outputPath: "/assets/images/",
+                            useRelativePath: true
                         }
                     }
                 ]
@@ -71,13 +71,15 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin("dist", {}),
         new MiniCssExtractPlugin({
-            filename: "style.[contenthash].css"
+            filename: "assets/styles/main.[contenthash].css"
         }),
         new HtmlWebpackPlugin({
+            // When passing true or 'body' all javascript resources will be placed at body bottom.
+            // 'head' will place the scripts in the head element
             inject: false,
             hash: true,
-            filename: path.resolve(__dirname, 'dist/index.html'),
-            template: path.resolve(__dirname, 'src/index.html'),
+            template: path.resolve(__dirname, "src/index.html"),
+            filename: path.resolve(__dirname, "dist/index.html")
         }),
         new WebpackChunkHash()
     ]
