@@ -7,7 +7,8 @@
         "dev": "webpack-dev-server --mode development",
         "dev:open": "webpack-dev-server --mode development --open",
         "build": "webpack --mode production",
-        "watch": "webpack --mode development --watch"
+        "watch": "webpack --mode development --watch",
+        "deploy": "yarn build && surge --domain https://judicious-zipper.surge.sh dist/"
     },
     "devDependencies": {
         "@babel/core": "^7.2.2",
