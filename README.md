@@ -1,5 +1,15 @@
 # workshop-html-css-wayup-1
-Project for learning css/html markup basics techniques (non adaptive, fixed markup)
+Project for learning css/html markup basics techniques
+
+- Adaptive layout
+- Float only, NO Flexbox, NO Grid
+- Vanilla JS, NO jQuery
+
+## Steps
+
+1. Fixed markup created
+2. Adaptiveness implemeted with no HTML edit, only CSS
+3. Adaptive menu implemented with no HTML changed, only Vanilla JavaScript
 
 ## Links
 
