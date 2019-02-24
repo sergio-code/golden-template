@@ -6,7 +6,11 @@ Project for learning css/html markup basics techniques (non adaptive, fixed mark
  - [Video lesson (YouTube)](https://www.youtube.com/watch?v=6l3ZSOQKE5g)
  - [PSD file](https://wayup.in/assets/templates/wp/lm/dk/html-css-layout-files.zip)
 
-## Preview
+## Result
 https://judicious-zipper.surge.sh/
 
-![Screenshot](https://i.imgur.com/JmM2NKR.jpg)
+### Mobile first section screenshot
+![Mobile screenshot](https://i.imgur.com/jMUiXQZ.png)
+
+### Desktop full screenshot
+![Desktop screenshot](https://i.imgur.com/GvdvMzW.jpg)
