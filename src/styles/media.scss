@@ -44,7 +44,7 @@
         position: fixed;
         float: none;
         margin: 0;
-        padding: 8vmax 8vmax 5vmax;
+        padding: 8vmax 0 5vmax;
         top: 0;
         right: 0;
         background-color: #505050;
@@ -73,14 +73,14 @@
         .menu {
             li {
                 float: none;
+                display: block;
                 margin: 0;
                 margin-bottom: 1em;
 
-                &:hover {
-                    background-color: #bebebe;
-                }
-
                 a {
+                    display: block;
+                    padding-left: 8vmax;
+                    padding-right: 8vmax;
                     font-size: 1.2em;
                 }
             }
